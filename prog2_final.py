@@ -210,27 +210,28 @@ def resolve( clause_1, clause_2):
 
         temp = substitute(c1, c2, subst)
         if(len(temp[0])==1 and len(temp[1])==0 and temp[0][0].getName()=='Answer'):
-            return True,temp[0]
+            return True,temp[0],True
         if len(temp[0]) == 0 and len(temp[1]) == 0:
-            return True, []
+            return True, [],False
         new_clauses.append(clause(cls_no, temp[0], temp[1]))
 
-    return False, new_clauses
+    return False, new_clauses , False
 
-def resolution():
+def two_pointer_resolution():
     global cls_no
     outer_loop_start = len(KB)
     total_clauses = KB + conclusions
-    cls_no = total_clauses[-1].clause_no + 1
+    cls_no = total_clauses[-1].clause_no
 
     i = 0
     while (i < outer_loop_start):
-        solved, new_clause = resolve(total_clauses[i], total_clauses[outer_loop_start])
+        solved, new_clause, answer = resolve(total_clauses[i], total_clauses[outer_loop_start])
         if solved:
             print "FALSE",
             print "from Clause " + str(total_clauses[i].getClauseNumber()) + " and " + "Clause " + str(
                 total_clauses[outer_loop_start].getClauseNumber())
-            #print "Answer="+new_clause[0].getVariables()[0].getName()
+            if(answer):
+                print "Answer="+new_clause[0].getVariables()[0].getName()
             print "Hence, Proved"
             break
         if new_clause != None:
@@ -240,14 +241,44 @@ def resolution():
                 total_clauses=add_new_clause(total_clauses,cls)
         i+= 1
         if i == outer_loop_start:
-
             outer_loop_start += 1
             i = 0
 
+
         pass
+def unit_preference():
+    global cls_no
+    outer_loop_start = len(KB)
+    total_clauses = KB + conclusions
+    cls_no = total_clauses[-1].clause_no
+
+    i = 0
+    while (i < outer_loop_start):
+        solved, new_clause,answer = resolve(total_clauses[i], total_clauses[outer_loop_start])
+        if solved:
+            print "FALSE",
+            print "from Clause " + str(total_clauses[i].getClauseNumber()) + " and " + "Clause " + str(
+                total_clauses[outer_loop_start].getClauseNumber())
+            if(answer):
+                print "Answer=" + new_clause[0].getVariables()[0].getName()
+            print "Hence, Proved"
+            break
+        if new_clause != None:
+            for cls in new_clause:
+                print str(cls.getClauseNumber()) + " " + str(cls.getName()),
+                print "from Clause " + str(total_clauses[i].getClauseNumber()) + " and " + "Clause " + str(total_clauses[outer_loop_start].getClauseNumber())
+                total_clauses = add_new_clause(total_clauses, cls)
+        i += 1
+        if i == outer_loop_start:
+            outer_loop_start += 1
+            i = 0
+            total_clauses[outer_loop_start:] = sorted(total_clauses[outer_loop_start:],key=lambda x: len(x.getPosLiterals()) + len(x.getNegativeLiterals()))
+
+
+
 
 #First Question
-c1 = clause(1,[function('HOWL',[var('X')])],[function('HOUND',[var('X')])])
+'''c1 = clause(1,[function('HOWL',[var('X')])],[function('HOUND',[var('X')])])
 c2 = clause(2,[],[function('HAVE',[var('X'),var('Y')]), function('CAT',[var('Y')]), function('HAVE',[var('X'), var('Z')]),
                   function('MOUSE',[var('Z')])])
 c3 = clause(3,[],[function('LS',[var('W')]), function('HAVE',[var('W'), var('V')]), function('HOWL',[var('V')])])
@@ -256,7 +287,7 @@ c5 = clause(5, [function('CAT',[cons('a')]), function('HOUND',[cons('a')])], [])
 g6 = clause(6, [function('MOUSE',[cons('b')])], [])
 g7 = clause(7, [function('LS',[cons('John')])], [])
 g8 = clause(8, [function('HAVE',[cons('John'), cons('b')])], [])
-KnowledgeBase([c1,c2,c3,c4,c5],[g6,g7,g8])
+KnowledgeBase([c1,c2,c3,c4,c5],[g6,g7,g8])'''
 
 #Second Question
 '''c1 = clause(1, [function('rr',[cons('a')])], [function('coyote',[var('y')])])
@@ -283,14 +314,16 @@ g1 = clause(7, [], [function('d',[var('r')]), function('c',[var('r')])])
 
 KnowledgeBase([c1,c2,c3,c4,c5,c6],[g1])'''
 
-'''c1=clause(1,[function('GRANDPARENT',[var('X'),var('Y')])],[function('PARENT',[var('X'),var('Z')]),function('PARENT',[var('X'),var('Y')])])
+#Question Answer
+c1=clause(1,[function('GRANDPARENT',[var('X'),var('Y')])],[function('PARENT',[var('X'),var('Z')]),function('PARENT',[var('X'),var('Y')])])
 c2=clause(2,[function('PARENT',[var('X'),var('Y')])],[function('MOTHER',[var('X'),var('Y')])])
 c3=clause(3,[function('PARENT',[var('X'),var('Y')])],[function('FATHER',[var('X'),var('Y')])])
 c4=clause(4,[function('FATHER',[cons('ZEUS'),cons('ARES')])],[])
 c5=clause(5,[function('MOTHER',[cons('HERA'),cons('ARES')])],[])
 c6=clause(6,[function('FATHER',[cons('ARES'),cons('HARMONIA')])],[])
 g1 = clause(7,[function('Answer',[var('X')])],[function('GRANDPARENT',[var('X'),cons('HARMONIA')])])
-KnowledgeBase([c1,c2,c3,c4,c5,c6],[g1])'''
+KnowledgeBase([c1,c2,c3,c4,c5,c6],[g1])
 '''q4 = [["GRANDPARENT x y", "-PARENT x z", "-PARENT z y"], ["PARENT x y", "-MOTHER x y"], ["PARENT x y", "-FATHER x y"],
           ["FATHER (ZEUS) (ARES)"], ["MOTHER (HERA) (ARES)"], ["FATHER (ARES) (HARMONIA)"], ["-GRANDPARENT x HARMONIA", "ANSWER x"]]'''
-resolution()
+two_pointer_resolution()
+unit_preference()
