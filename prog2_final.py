@@ -314,16 +314,28 @@ g1 = clause(7, [], [function('d',[var('r')]), function('c',[var('r')])])
 
 KnowledgeBase([c1,c2,c3,c4,c5,c6],[g1])'''
 
+#Fourth Question(Self-Example)
+c1=clause(1,[function('P1',[cons('Boomer')])],[])
+c2=clause(2,[function('P3',[var('X')])],[function('P1',[var('X')])])
+c3=clause(3,[function('P4',[cons('Dio')])],[])
+c4=clause(4,[function('P1',[var('X')])],[function('P4',[var('X')])])
+c5=clause(5,[function('P2',[var('Y'),var('X')])],[function('P4',[var('Y')]),function('P1',[var('X')]),function('P5',[var('X'),var('Y')])])
+c6=clause(6,[function('P2',[var('Y'),var('X')])],[])
+c7=clause(7,[],[function('P3',[var('X')]),function('P3',[var('Y')]),function('P6',[var('X'),var('Y')]),function('P2',[var('Y'),var('X')])])
+c8=clause(8,[function('P6',[cons('Boomer'),cons('Dio')])],[])
+g1=clause(9,[function('P2',[cons('Dio'),cons('Boomer')])],[])
+KnowledgeBase([c1,c2,c3,c4,c5,c6,c7,c8],[g1])
+
 #Question Answer
-c1=clause(1,[function('GRANDPARENT',[var('X'),var('Y')])],[function('PARENT',[var('X'),var('Z')]),function('PARENT',[var('X'),var('Y')])])
+'''c1=clause(1,[function('GRANDPARENT',[var('X'),var('Y')])],[function('PARENT',[var('X'),var('Z')]),function('PARENT',[var('X'),var('Y')])])
 c2=clause(2,[function('PARENT',[var('X'),var('Y')])],[function('MOTHER',[var('X'),var('Y')])])
 c3=clause(3,[function('PARENT',[var('X'),var('Y')])],[function('FATHER',[var('X'),var('Y')])])
 c4=clause(4,[function('FATHER',[cons('ZEUS'),cons('ARES')])],[])
 c5=clause(5,[function('MOTHER',[cons('HERA'),cons('ARES')])],[])
 c6=clause(6,[function('FATHER',[cons('ARES'),cons('HARMONIA')])],[])
 g1 = clause(7,[function('Answer',[var('X')])],[function('GRANDPARENT',[var('X'),cons('HARMONIA')])])
-KnowledgeBase([c1,c2,c3,c4,c5,c6],[g1])
-'''q4 = [["GRANDPARENT x y", "-PARENT x z", "-PARENT z y"], ["PARENT x y", "-MOTHER x y"], ["PARENT x y", "-FATHER x y"],
-          ["FATHER (ZEUS) (ARES)"], ["MOTHER (HERA) (ARES)"], ["FATHER (ARES) (HARMONIA)"], ["-GRANDPARENT x HARMONIA", "ANSWER x"]]'''
-two_pointer_resolution()
+KnowledgeBase([c1,c2,c3,c4,c5,c6],[g1])'''
+
+
+#two_pointer_resolution()
 unit_preference()
