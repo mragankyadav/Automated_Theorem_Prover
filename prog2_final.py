@@ -32,7 +32,6 @@ class clause:
         self.neg_literals=n
         self.clause_no=num
         name = []
-        name.append("Positive")
         name.append('(')
         for i in self.getPosLiterals():
             fname = i.getName()
@@ -53,12 +52,12 @@ class clause:
         if (name[len(name) - 1] != '('):
             del name[len(name) - 1]
         name.append(')')
-        name.append(" Negative ")
         name.append('(')
 
         for i in self.getNegativeLiterals():
             fname = i.getName()
             vars = i.getVariables()
+            name.append('-')
             name.append(fname)
             name.append('(')
             for j in vars:
@@ -98,25 +97,32 @@ def KnowledgeBase(kb,conc):
     global conclusions
     KB=kb
     conclusions=conc
+    print "------Knowledge Base----------"
+    for i in kb:
+        print str(i.getClauseNumber())+" "+str(i.getName())
+    print "------Conclusions-------------"
+    for i in conc:
+        print str(i.getClauseNumber()) + " " + str(i.getName())
+    print "------Generated Clauses-------"
 
 
 
-def unify(l1, l2, s):
+def unification(l1, l2, s):
     if isinstance(l1, cons) and isinstance(l2, cons) and l1 == l2:
         return s
     elif isinstance(l1, var):
-        return unify_var(l1, l2, s)
+        return unification_var(l1, l2, s)
     elif isinstance(l2, var):
-        return unify_var(l2, l1, s)
+        return unification_var(l2, l1, s)
     elif isinstance(l1, function) and isinstance(l2, function):
-        return unify_function(l1.values, l2.values, s)
+        return unification_function(l1.values, l2.values, s)
     else:
         return {}
 
 
-def unify_var(var, l, s):
+def unification_var(var, l, s):
     if s.has_key(var):
-        return unify(s[var], l, s)
+        return unification(s[var], l, s)
     else:
         occurs_check(var, l)
         s[var] = l
@@ -133,12 +139,12 @@ def occurs_check(variable, l):
             pass
 
 
-def unify_function(l1, l2, s):
+def unification_function(l1, l2, s):
     if len(l1) != len(l2):
         return {}
     else:
         for i in range(len(l1)):
-            sub = unify(l1[i], l2[i], s)
+            sub = unification(l1[i], l2[i], s)
         return sub
 
 
@@ -195,7 +201,7 @@ def resolve( clause_1, clause_2):
                 nname = neg.name
 
     if(len(poshash)==1 and len(neghash)==1):
-        subst = unify(poshash[pname][0], neghash[nname][0], {})
+        subst = unification(poshash[pname][0], neghash[nname][0], {})
         cls_no += 1
         c1 = deepcopy(clause_1)
         c2 = deepcopy(clause_2)
@@ -219,60 +225,68 @@ def resolve( clause_1, clause_2):
 
 def two_pointer_resolution():
     global cls_no
-    outer_loop_start = len(KB)
+    second_pointer = len(KB)
     total_clauses = KB + conclusions
     cls_no = total_clauses[-1].clause_no
 
     i = 0
-    while (i < outer_loop_start):
-        solved, new_clause, answer = resolve(total_clauses[i], total_clauses[outer_loop_start])
+    while (i < second_pointer):
+        solved, new_clause, answer = resolve(total_clauses[i], total_clauses[second_pointer])
         if solved:
             print "FALSE",
             print "from Clause " + str(total_clauses[i].getClauseNumber()) + " and " + "Clause " + str(
-                total_clauses[outer_loop_start].getClauseNumber())
+                total_clauses[second_pointer].getClauseNumber())
+            print '-------------Clause Resolved-----------'
+            print ''
             if(answer):
                 print "Answer="+new_clause[0].getVariables()[0].getName()
-            print "Hence, Proved"
+                print'---------Answer Found----------------'
+                print ''
             break
         if new_clause != None:
             for cls in new_clause:
                 print str(cls.getClauseNumber())+" "+str(cls.getName()),
-                print "from Clause "+str(total_clauses[i].getClauseNumber())+" and "+"Clause "+str(total_clauses[outer_loop_start].getClauseNumber())
+                print "from Clause "+str(total_clauses[i].getClauseNumber())+" and "+"Clause "+str(total_clauses[second_pointer].getClauseNumber())
                 total_clauses=add_new_clause(total_clauses,cls)
         i+= 1
-        if i == outer_loop_start:
-            outer_loop_start += 1
+        if i == second_pointer:
+            second_pointer += 1
             i = 0
 
 
         pass
 def unit_preference():
     global cls_no
-    outer_loop_start = len(KB)
+    second_pointer = len(KB)
     total_clauses = KB + conclusions
     cls_no = total_clauses[-1].clause_no
 
     i = 0
-    while (i < outer_loop_start):
-        solved, new_clause,answer = resolve(total_clauses[i], total_clauses[outer_loop_start])
+    while (i < second_pointer):
+        solved, new_clause,answer = resolve(total_clauses[i], total_clauses[second_pointer])
         if solved:
             print "FALSE",
             print "from Clause " + str(total_clauses[i].getClauseNumber()) + " and " + "Clause " + str(
-                total_clauses[outer_loop_start].getClauseNumber())
+                total_clauses[second_pointer].getClauseNumber())
+            print '-------------Clause Resolved-----------'
+            print ''
             if(answer):
                 print "Answer=" + new_clause[0].getVariables()[0].getName()
-            print "Hence, Proved"
+                print'---------Answer Found----------------'
+                print ''
             break
         if new_clause != None:
             for cls in new_clause:
                 print str(cls.getClauseNumber()) + " " + str(cls.getName()),
-                print "from Clause " + str(total_clauses[i].getClauseNumber()) + " and " + "Clause " + str(total_clauses[outer_loop_start].getClauseNumber())
+                print "from Clause " + str(total_clauses[i].getClauseNumber()) + " and " + "Clause " + str(total_clauses[second_pointer].getClauseNumber())
                 total_clauses = add_new_clause(total_clauses, cls)
         i += 1
-        if i == outer_loop_start:
-            outer_loop_start += 1
+        if i == second_pointer:
+            second_pointer += 1
             i = 0
-            total_clauses[outer_loop_start:] = sorted(total_clauses[outer_loop_start:],key=lambda x: len(x.getPosLiterals()) + len(x.getNegativeLiterals()))
+            total_clauses[second_pointer:] = sorted(total_clauses[second_pointer:],key=lambda x: len(x.getPosLiterals()) + len(x.getNegativeLiterals()))
+    if(not solved):
+        print "Theorem not provable"
 
 
 
@@ -282,7 +296,7 @@ def unit_preference():
 
 
 
-
+#---------------Problem Input-------------------------------------------------------------------------------------------
 def howl():
     c1 = clause(1,[function('HOWL',[var('X')])],[function('HOUND',[var('X')])])
     c2 = clause(2,[],[function('HAVE',[var('X'),var('Y')]), function('CAT',[var('Y')]), function('HAVE',[var('X'), var('Z')]),
