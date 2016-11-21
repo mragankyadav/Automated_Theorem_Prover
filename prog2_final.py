@@ -277,65 +277,127 @@ def unit_preference():
 
 
 
-#First Question
-'''c1 = clause(1,[function('HOWL',[var('X')])],[function('HOUND',[var('X')])])
-c2 = clause(2,[],[function('HAVE',[var('X'),var('Y')]), function('CAT',[var('Y')]), function('HAVE',[var('X'), var('Z')]),
-                  function('MOUSE',[var('Z')])])
-c3 = clause(3,[],[function('LS',[var('W')]), function('HAVE',[var('W'), var('V')]), function('HOWL',[var('V')])])
-c4 = clause(4,[function('HAVE',[cons('John'),cons('a')])], [])
-c5 = clause(5, [function('CAT',[cons('a')]), function('HOUND',[cons('a')])], [])
-g6 = clause(6, [function('MOUSE',[cons('b')])], [])
-g7 = clause(7, [function('LS',[cons('John')])], [])
-g8 = clause(8, [function('HAVE',[cons('John'), cons('b')])], [])
-KnowledgeBase([c1,c2,c3,c4,c5],[g6,g7,g8])'''
+
+
+
+
+
+
+def howl():
+    c1 = clause(1,[function('HOWL',[var('X')])],[function('HOUND',[var('X')])])
+    c2 = clause(2,[],[function('HAVE',[var('X'),var('Y')]), function('CAT',[var('Y')]), function('HAVE',[var('X'), var('Z')]),
+                      function('MOUSE',[var('Z')])])
+    c3 = clause(3,[],[function('LS',[var('W')]), function('HAVE',[var('W'), var('V')]), function('HOWL',[var('V')])])
+    c4 = clause(4,[function('HAVE',[cons('John'),cons('a')])], [])
+    c5 = clause(5, [function('CAT',[cons('a')]), function('HOUND',[cons('a')])], [])
+    g6 = clause(6, [function('MOUSE',[cons('b')])], [])
+    g7 = clause(7, [function('LS',[cons('John')])], [])
+    g8 = clause(8, [function('HAVE',[cons('John'), cons('b')])], [])
+    KnowledgeBase([c1,c2,c3,c4,c5],[g6,g7,g8])
 
 #Second Question
-'''c1 = clause(1, [function('rr',[cons('a')])], [function('coyote',[var('y')])])
-c2 = clause(2, [function('chase',[var('z'), cons('a')])], [function('coyote',[var('z')])])
-c3 = clause(3, [function('smart',[var('x')])], [function('rr',[var('x')]), function('beep',[var('x')])])
-c4 = clause(4, [], [function('coyote',[var('w')]), function('rr',[var('u')]), function('catch',[var('w'), var('u')]), function('smart',[var('u')])])
-c5 = clause(5, [function('frustrated',[var('s')]), function('catch',[var('s'), var('t')])], [function('coyote',[var('s')]), function('rr',[var('t')]), function('chase',[var('s'), var('t')])])
-c6 = clause(6, [function('beep',[var('r')])], [function('rr',[var('r')])])
+def coyote():
+    c1 = clause(1, [function('rr',[cons('a')])], [function('coyote',[var('y')])])
+    c2 = clause(2, [function('chase',[var('z'), cons('a')])], [function('coyote',[var('z')])])
+    c3 = clause(3, [function('smart',[var('x')])], [function('rr',[var('x')]), function('beep',[var('x')])])
+    c4 = clause(4, [], [function('coyote',[var('w')]), function('rr',[var('u')]), function('catch',[var('w'), var('u')]), function('smart',[var('u')])])
+    c5 = clause(5, [function('frustrated',[var('s')]), function('catch',[var('s'), var('t')])], [function('coyote',[var('s')]), function('rr',[var('t')]), function('chase',[var('s'), var('t')])])
+    c6 = clause(6, [function('beep',[var('r')])], [function('rr',[var('r')])])
 
-g1 = clause(7, [function('coyote',[cons('b')])], [])
-g2 = clause(8, [], [function('frustrated',[cons('b')])])
+    g1 = clause(7, [function('coyote',[cons('b')])], [])
+    g2 = clause(8, [], [function('frustrated',[cons('b')])])
 
-KnowledgeBase([c1,c2,c3,c4,c5,c6],[g1,g2])'''
+    KnowledgeBase([c1,c2,c3,c4,c5,c6],[g1,g2])
 
 
 #ThirdQuestion
-'''c1 = clause(1, [function('v',[var('x')]), function('s',[var('x'), function('f',[var('x')])])], [function('e',[var('x')])])
-c2 = clause(2, [function('v',[var('y')]), function('c',[function('f', [var('y')])])], [function('e',[var('y')])])
-c3 = clause(3, [function('e', [cons('a')])], [])
-c4 = clause(4, [function('d', [cons('a')])], [])
-c5 = clause(5, [function('d',[var('z')])], [function('s',[cons('a'), var('z')])])
-c6 = clause(6, [], [function('d',[var('w')]), function('v',[var('w')])])
-g1 = clause(7, [], [function('d',[var('r')]), function('c',[var('r')])])
-
-KnowledgeBase([c1,c2,c3,c4,c5,c6],[g1])'''
+def drug_dealer():
+    c1 = clause(1, [function('v',[var('x')]), function('s',[var('x'), function('f',[var('x')])])], [function('e',[var('x')])])
+    c2 = clause(2, [function('v',[var('y')]), function('c',[function('f', [var('y')])])], [function('e',[var('y')])])
+    c3 = clause(3, [function('e', [cons('a')])], [])
+    c4 = clause(4, [function('d', [cons('a')])], [])
+    c5 = clause(5, [function('d',[var('z')])], [function('s',[cons('a'), var('z')])])
+    c6 = clause(6, [], [function('d',[var('w')]), function('v',[var('w')])])
+    g1 = clause(7, [], [function('d',[var('r')]), function('c',[var('r')])])
+    KnowledgeBase([c1,c2,c3,c4,c5,c6],[g1])
 
 #Fourth Question(Self-Example)
-c1=clause(1,[function('P1',[cons('Boomer')])],[])
-c2=clause(2,[function('P3',[var('X')])],[function('P1',[var('X')])])
-c3=clause(3,[function('P4',[cons('Dio')])],[])
-c4=clause(4,[function('P1',[var('X')])],[function('P4',[var('X')])])
-c5=clause(5,[function('P2',[var('Y'),var('X')])],[function('P4',[var('Y')]),function('P1',[var('X')]),function('P5',[var('X'),var('Y')])])
-c6=clause(6,[function('P2',[var('Y'),var('X')])],[])
-c7=clause(7,[],[function('P3',[var('X')]),function('P3',[var('Y')]),function('P6',[var('X'),var('Y')]),function('P2',[var('Y'),var('X')])])
-c8=clause(8,[function('P6',[cons('Boomer'),cons('Dio')])],[])
-g1=clause(9,[function('P2',[cons('Dio'),cons('Boomer')])],[])
-KnowledgeBase([c1,c2,c3,c4,c5,c6,c7,c8],[g1])
+def self_example():
+    c1=clause(1,[function('P1',[cons('Boomer')])],[])
+    c2=clause(2,[function('P3',[var('X')])],[function('P1',[var('X')])])
+    c3=clause(3,[function('P4',[cons('Dio')])],[])
+    c4=clause(4,[function('P1',[var('X')])],[function('P4',[var('X')])])
+    c5=clause(5,[function('P2',[var('Y'),var('X')])],[function('P4',[var('Y')]),function('P1',[var('X')]),function('P5',[var('X'),var('Y')])])
+    c6=clause(6,[function('P2',[var('Y'),var('X')])],[])
+    c7=clause(7,[],[function('P3',[var('X')]),function('P3',[var('Y')]),function('P6',[var('X'),var('Y')]),function('P2',[var('Y'),var('X')])])
+    c8=clause(8,[function('P6',[cons('Boomer'),cons('Dio')])],[])
+    g1=clause(9,[function('P2',[cons('Dio'),cons('Boomer')])],[])
+    KnowledgeBase([c1,c2,c3,c4,c5,c6,c7,c8],[g1])
 
 #Question Answer
-'''c1=clause(1,[function('GRANDPARENT',[var('X'),var('Y')])],[function('PARENT',[var('X'),var('Z')]),function('PARENT',[var('X'),var('Y')])])
-c2=clause(2,[function('PARENT',[var('X'),var('Y')])],[function('MOTHER',[var('X'),var('Y')])])
-c3=clause(3,[function('PARENT',[var('X'),var('Y')])],[function('FATHER',[var('X'),var('Y')])])
-c4=clause(4,[function('FATHER',[cons('ZEUS'),cons('ARES')])],[])
-c5=clause(5,[function('MOTHER',[cons('HERA'),cons('ARES')])],[])
-c6=clause(6,[function('FATHER',[cons('ARES'),cons('HARMONIA')])],[])
-g1 = clause(7,[function('Answer',[var('X')])],[function('GRANDPARENT',[var('X'),cons('HARMONIA')])])
-KnowledgeBase([c1,c2,c3,c4,c5,c6],[g1])'''
+def question_answer():
+    c1=clause(1,[function('GRANDPARENT',[var('X'),var('Y')])],[function('PARENT',[var('X'),var('Z')]),function('PARENT',[var('X'),var('Y')])])
+    c2=clause(2,[function('PARENT',[var('X'),var('Y')])],[function('MOTHER',[var('X'),var('Y')])])
+    c3=clause(3,[function('PARENT',[var('X'),var('Y')])],[function('FATHER',[var('X'),var('Y')])])
+    c4=clause(4,[function('FATHER',[cons('ZEUS'),cons('ARES')])],[])
+    c5=clause(5,[function('MOTHER',[cons('HERA'),cons('ARES')])],[])
+    c6=clause(6,[function('FATHER',[cons('ARES'),cons('HARMONIA')])],[])
+    g1 = clause(7,[function('Answer',[var('X')])],[function('GRANDPARENT',[var('X'),cons('HARMONIA')])])
+    KnowledgeBase([c1,c2,c3,c4,c5,c6],[g1])
 
+def user_choice_handler(choice1,choice2):
+    if (choice1 == 1):
+        howl()
+        if (choice2 == 1):
+            two_pointer_resolution()
+        else:
+            unit_preference()
+    elif (choice1 == 2):
+        drug_dealer()
+        if (choice2 == 1):
+            two_pointer_resolution()
+        else:
+            unit_preference()
+    elif (choice1 == 3):
+        coyote()
+        if (choice2 == 1):
+            two_pointer_resolution()
+        else:
+            unit_preference()
+    elif (choice1 == 4):
+        question_answer()
+        if (choice2 == 1):
+            two_pointer_resolution()
+        else:
+            unit_preference()
+    elif (choice1 == 5):
+        self_example()
+        if (choice2 == 1):
+            two_pointer_resolution()
+        else:
+            unit_preference()
 
-#two_pointer_resolution()
-unit_preference()
+if __name__ == "__main__":
+    end='N'
+    while(end=='N'):
+        print " ----All Questions are present in the code file itself.----"
+        print "--------And so no seprate input file has been added.-------"
+        print "Enter your choices based on the instructions provided below."
+        print "For Problem 5, Question is also being printed for your ease."
+        print "############################################################"
+        print "Please select the Question and Method you want to check:"
+        print "Enter '1' for HOWLING HOUND problem."
+        print "Enter '2' for DRUG DEALER AND CUSTOM OFFICIALS problem."
+        print "Enter '3' for COYOTE AND ROAD RUNNER problem."
+        print "Enter '4' for HARMONIA AND GRANDPARENT question-answer problem."
+        print "Enter '5' for the SELF MADE EXAMPLE."
+        choice1=int(raw_input())
+        print "--------------------------------------------------------------"
+        print "Select the resolution method of your choice:"
+        print "Enter '1' for TWO-POINTER RESOLUTION strategy"
+        print "Enter '2' for UNIT PREFERENCE RESOLUTION strategy"
+        choice2=int(raw_input())
+        print "Do you want to Terminate the Program after this ? Enter Y/N"
+        end= (raw_input().upper())
+        print end
+        user_choice_handler(choice1,choice2)
